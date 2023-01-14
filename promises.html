@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <script>
+
+
+
+
+
+
+
+
+
+
+        // fetch(`https://todo.soprano.biz/note/202`, {
+        //   method: 'DELETE',
+        // });
+
+
+
+        fetch('https://todo.soprano.biz/note/')
+            .then((response) => response.json())
+            .then((json) => console.log(json.length))
+            .then((json) => {
+                for (let i = 645; i <= 650; i++)
+                    fetch(`https://todo.soprano.biz/note/${i}`, {
+                        method: 'DELETE',
+                    });
+
+            })
+
+
+
+
+
+    </script>
+</body>
+
+</html>
