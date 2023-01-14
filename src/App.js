@@ -75,6 +75,7 @@ function App() {
       },
     })
    document.location.reload();
+
   }
 
   //  изменение отредактированной строки 
