@@ -175,7 +175,7 @@ function App() {
     });
   
 
-
+    document.location.reload();
   
   
 
