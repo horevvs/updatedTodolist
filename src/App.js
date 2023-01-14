@@ -26,10 +26,10 @@ function App() {
     fetch('https://todo.soprano.biz/note/')
       .then((response) => response.json())
       .then((data) => setTodo(data))
- 
+
   }, [])
 
- console.log(todo)
+
 
 
   // подтвержедние удаления //
@@ -55,7 +55,7 @@ function App() {
 
   // добвление элемента с интпута //
   const addfrominput = () => {
-    
+
     let random = Math.random().toFixed(2) * 100
     setList([...list, { value: inputs, id: random }])
     // просто складываем сюда тоже самое что и в лист
@@ -74,7 +74,7 @@ function App() {
         'Content-type': 'application/json; charset=UTF-8',
       },
     })
-   document.location.reload();
+    document.location.reload();
 
   }
 
@@ -84,7 +84,7 @@ function App() {
       value: `${edit}`,
       id: id,
     }
-    // console.log(obj.id)
+
 
 
     // находим айдишиник нашего  измняемого элемента  
@@ -165,62 +165,30 @@ function App() {
 
   // удаление заметки
   const deletehandler = (id) => {
-    let newarray = list.filter((item) => item.id !== id)
-    setList(newarray)
+
+  
+ 
+    alert(id)
+
+    fetch(`https://todo.soprano.biz/note/${id}`, {
+      method: 'DELETE',
+    });
+  
 
 
-    fetch('https://todo.soprano.biz/note')
-      .then((response) => response.json())
-      .then((data) => {
+  
+  
 
-
-
-
-
-        // взяли наш массив в который складывем изначальные туду
-        for (let i = 0; i < returnedit.length; i++)
-          // фильтруем если наши айди совпадабт получим изначально имя которое было в пос запросе
-          if (returnedit[i].id === id) {
-            // alert('find returnedit ')
-            // получаем результат  имя  которое изначально было в пост запросе
-            let findreturneditname = returnedit[i].id
-            console.log(findreturneditname + 'это он точно')
-
-            // получсем наш большой массив с бэкэнда
-            for (let i = 0; i < data.length; i++)
-              // фильтруем если имя в большом массиве рано имени которое было в переменной  findreturneditname
-              if (data[i].id === findreturneditname) {
-                alert('find')
-                alert(data[i].id)
-                let thisnewLet = data[i].id
-                console.log(thisnewLet + 'это он')
-                let url = `https://todo.soprano.biz/note/${thisnewLet}`
-                fetch(url, {
-                  method: 'DELETE',
-                })
-              }
-          }
-      }
-      )
-
-
-
-
-
-
-    fetch('https://jsonplaceholder.typicode.com/posts/1')
-      .then((response) => response.json())
-      .then((json) => console.log(json)
-
-
-
-      );
+      
 
 
 
 
     setOpen(false);
   }
+
+
+
 
   // толи нужен толи нет потом допилить
   let check = (id) => {
