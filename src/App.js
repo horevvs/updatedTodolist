@@ -36,6 +36,7 @@ function App() {
 
 
   const addfrominput = () => {
+
     let random = Math.random().toFixed(2) * 100
     setList([...list, { value: inputs, id: random }])
     setTodo([...todo, { name: inputs, id: random }])
@@ -55,7 +56,6 @@ function App() {
         headers: { 'Content-type': 'application/json; charset=UTF-8', },
       }
     )
-
     document.location.reload();
   }
 
@@ -90,9 +90,7 @@ function App() {
           }
         )
         document.location.reload();
-
       }
-
   }
 
   // удаление заметки//
@@ -110,15 +108,17 @@ function App() {
   }
 
   let returndeleted = (id) => {
-    // console.log(id, name)
+
     // в состояние ложим фетч запрос
     fetch('https://todo.soprano.biz/task/')
       .then((response) => response.json())
       .then((data) => setReturnara(data))
+    console.log(id)
+
     // проверяем что старый запрос появился
 
     // перебираем масссив ищем старое имя котрое было по id  в note_id
-    for (let i = returnara.length - 1; i > 0; i--)
+    for (let i = returnara.length - 1; i < returnara.length; i--)
       if (returnara[i].note_id == id) {
         let b = returnara[i].subject
         let a = returnara[i].note_id
@@ -127,74 +127,51 @@ function App() {
           if (todo[c].id === a) {
 
 
-             todo[c].name = b
-             console.log(a+b)
+            todo[c].name = b
+            console.log(a + b)
           }
       }
 
 
 
 
+    //document.location.reload();
 
 
-
-
-
-    // получили с таска наше имя которое надо вернуть обратно с note_id которое равно id в массив todo 
-    // // получаем массив туду и выполняем поиск по нему
-    // console.log(returnara[i].subject)
-
-    //  , console.log(returnara[i].subject)
-    // break
-
-
-    // for (let c = 0; i < todo.length; i++)
-    //   if (todo[c].id === returnara[i].note_id) {
-    //     todo[c].name = returnara[i].subject
-    //     console.log(todo[c].name + returnara[i].subject)
-    //   }
-
-
-
-
-
-    // document.location.reload();
-
-
-    }
-
-    return (
-      <div >
-        <div className='position'>
-          <TextField id="standard-basic" label="заметки" variant="standard" ref={ref} value={inputs} onChange={(e) => setInputs(e.target.value)} />
-          <Button onClick={addfrominput} variant="contained" endIcon={<SendIcon />}> Send  </Button>
-        </div>
-        {todo.map((item) => {
-          return (
-            <div key={item.id} >
-              <div className='flow positionreder'> <input type="checkbox" onClick={() => check(item.id)} ref={checkbox}  ></input>
-                <p> {item.name}   </p>
-                <div>
-                  <button onClick={() => deletehandler(item.id)}> удалить</button>
-                </div>
-                <div className='opasity'>
-                  <input type="text" placeholder='add text' value={edit} onChange={(e) => setEdit(e.target.value)} />
-                  <Button onClick={() => send(item.id, item.name)} >  edit </Button>
-                  <Tooltip title="return edit">
-                    <IconButton onClick={() => returndeleted(item.id, item.name)} >
-                      <BackspaceSharpIcon />
-                    </IconButton>
-                  </Tooltip>
-                </div>
-              </div>
-            </div>
-          )
-        })}
-      </div>
-    )
   }
 
-  export default App
+  return (
+    <div >
+      <div className='position'>
+        <TextField id="standard-basic" label="заметки" variant="standard" ref={ref} value={inputs} onChange={(e) => setInputs(e.target.value)} />
+        <Button onClick={addfrominput} variant="contained" endIcon={<SendIcon />}> Send  </Button>
+      </div>
+      {todo.map((item) => {
+        return (
+          <div key={item.id} >
+            <div className='flow positionreder'> <input type="checkbox" onClick={() => check(item.id)} ref={checkbox}  ></input>
+              <p> {item.name}   </p>
+              <div>
+                <button onClick={() => deletehandler(item.id)}> удалить</button>
+              </div>
+              <div className='opasity'>
+                <input type="text" placeholder='add text' value={edit} onChange={(e) => setEdit(e.target.value)} />
+                <Button onClick={() => send(item.id, item.name)} >  edit </Button>
+                <Tooltip title="return edit">
+                  <IconButton onClick={() => returndeleted(item.id, item.name)} >
+                    <BackspaceSharpIcon />
+                  </IconButton>
+                </Tooltip>
+              </div>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+export default App
 
 
 
