@@ -50,13 +50,16 @@
 }
 
 
-
-
-
 .modalDialog{
-
   background-color: rgb(207, 163, 163);
-
-
 }
 
+
+
+.cont {
+  width: 250px;
+  color: red;
+  
+  margin-left: 150px;
+  background-color: violet;
+}
