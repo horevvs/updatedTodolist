@@ -18,9 +18,7 @@ function App() {
   }, [])
 
 
-  useEffect(() => {
 
-  }, [])
 
 
 
@@ -164,7 +162,7 @@ function App() {
             console.log(a + b)
           }
       }
-    //document.location.reload();
+    document.location.reload();
   }
 
   return (
