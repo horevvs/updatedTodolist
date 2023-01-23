@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -11,22 +11,25 @@ import BackspaceSharpIcon from '@mui/icons-material/BackspaceSharp';
 
 function App() {
   const [todo, setTodo] = useState([])
+
   useEffect(() => {
     fetch('https://todo.soprano.biz/note/')
-      .then((response) => response.json())
+      .then((response) => {
+        // Проверяем успешность запроса 
+        if (response.status !== 200) { console.log(response.status); }
+        return response.json()
+      }
+      )
       .then((data) => setTodo(data))
-  }, [])
+  }, [todo])
+
+  // useEffect(() => {
+  //   fetch('https://todo.soprano.biz/note/')
+  //     .then((response) => response.json())
+  //     .then((data) => setTodo(data))
+  // }, [])
 
 
-
-
-
-
-
-  //
-  // const ref = useRef(null);
-  // const checkbox = useRef(null);
-  //
   const [inputs, setInputs] = useState([])
   const [list, setList] = useState([])
   const [edit, setEdit] = useState([])
@@ -35,9 +38,6 @@ function App() {
 
 
   // добавление элемента с интпута //
-
-
-
   const addfrominput = () => {
     let random = Math.random().toFixed(2) * 100
     setList([...list, { value: inputs, id: random }])
@@ -58,7 +58,7 @@ function App() {
         headers: { 'Content-type': 'application/json; charset=UTF-8', },
       }
     )
-    document.location.reload();
+    // document.location.reload();
   }
 
   //  изменение отредактированной строки //
@@ -66,12 +66,12 @@ function App() {
     let obj = {
       name: `${edit}`,
     }
+
     let objtask = {
       subject: `${name}`,
       note_id: id,
       resolved: false
     }
-
     for (let i = 0; i < todo.length; i++)
       if (todo[i].id === id) {
         let thisname = todo[i].id
@@ -83,13 +83,11 @@ function App() {
             'Content-type': 'application/json; charset=UTF-8',
           }
         })
-
-        fetch('https://todo.soprano.biz/task',
-          {
-            method: 'POST',
-            body: JSON.stringify(objtask),
-            headers: { 'Content-type': 'application/json; charset=UTF-8', },
-          }
+        fetch('https://todo.soprano.biz/task', {
+          method: 'POST',
+          body: JSON.stringify(objtask),
+          headers: { 'Content-type': 'application/json; charset=UTF-8', },
+        }
         )
         document.location.reload();
       }
@@ -109,10 +107,9 @@ function App() {
 
     let a = todo
     for (let i = 0; i < todo.length; i++)
-      if (todo[i].id == id) {
+      if (todo[i].id === id) {
         a[i].name = 'выполнено'
         setList(a)
-
 
         let obj = {
           name: a[i].name,
@@ -128,20 +125,10 @@ function App() {
           }
         }
         )
-      
-        
-  
-      
-      
-
-
-
-
       }
   }
 
   let returndeleted = (id) => {
-
     // в состояние ложим фетч запрос
     fetch('https://todo.soprano.biz/task/')
       .then((response) => response.json())
@@ -167,7 +154,7 @@ function App() {
 
   return (
     <div >
-         <div className='position'>
+      <div className='position'>
         <TextField id="standard-basic" label="заметки" variant="standard" value={inputs} onChange={(e) => setInputs(e.target.value)} />
         <Button onClick={addfrominput} variant="contained" endIcon={<SendIcon />}> Send  </Button>
       </div>
